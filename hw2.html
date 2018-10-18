@@ -133,7 +133,7 @@ function init() {
 
   let puckMesh = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 6, 32), new THREE.MeshLambertMaterial({color: 0x888888,emissive: particle.colour()}))
     puck = new Particle(puckMesh)
-    puck.vel.set(20, 0, -10)
+    puck.vel.set(30, 0, -5)
     puck.pos.y = 3
     
     let puck1Mesh = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 6, 32), new THREE.MeshLambertMaterial({color: 0x888888,emissive: particle.colour()}))
