@@ -35,7 +35,7 @@
 	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 	<div id="info">
   		Home to start<br/> Space to stop<br/> Left/Right to turn <br/> Up/Down to accelerate/decelerate<br/>
-  		<button id="toggle" style="width:20%">Toggle Camera</button><br/>
+  		<button id="toggle" onclick="useone = !useone;" style="width:20%">Toggle Camera</button><br/>
 	</div>
 
 <script>
@@ -53,9 +53,9 @@ var power = 0;
 var camera1, camera2;
 init();
 animate();
-$("#toggle").click(function() {
-  useone = !useone;
-});
+//$("#toggle").click(function() {
+//  useone = !useone;
+//});
 function init() {
   renderer = new THREE.WebGLRenderer({
     antialias: true
