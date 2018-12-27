@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////
 // global variables
 var camera, renderer;
-var agent;
+var agent,timer;
 
 // program starts here ...
 init();
@@ -40,6 +40,15 @@ function init() {
 //    agent = new Agent(new THREE.Vector3(-400 + 400 * Math.random(), 0, -400 + 400 * Math.random()), mesh);
     agent = new Agent(new THREE.Vector3(50,0,-50), size);
 
+
+  ///////////////////////
+    var sec = 0;
+    function pad ( val ) { return val > 9 ? val : "0" + val; }
+    timer = setInterval( function(){
+      $("#seconds").html(pad(++sec%60));
+      $("#minutes").html(pad(parseInt(sec/60,10)));
+    }, 1000);
+
 }
 
 
@@ -50,11 +59,13 @@ function animate() {
   // check agent crossing obstacles ...
   scene.obstacles.forEach ( function (obs) { obs.checkCollision (agent)} );
 
-  if (scene.targets.length > 0)
+  if (scene.targets.length > 0){
   	requestAnimationFrame(animate);
-  else
+  }
+  else{
   	alert ('game over')
-
+    clearInterval(timer)
+  }
   render();
 }
 
