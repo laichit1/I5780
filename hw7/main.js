@@ -1,7 +1,7 @@
 import {sceneFromJSON} from './scene.js';
 import {scene,initThree, postMessage} from './threemain.js';
-import * as AgentJ from './AgentJ.js';
-import * as AgentK from 'https://j91157j91157.github.io/GDHW/js/HW6/agent.js';
+import {Agent as AgentJ} from './AgentJ.js';
+import {Agent as AgentK} from 'https://j91157j91157.github.io/GDHW/js/HW6/agent.js';
 
 /////////////////////////////////////////////////////////
 // global variables
@@ -45,11 +45,10 @@ function init() {
   	let size = 10; // halfsize of agent
   	let randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
 //    agentJ = new AgentJ(new THREE.Vector3(randXZ[0], 0, randXZ[1]), size);
-    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
     agentJ = new AgentJ(new THREE.Vector3(500, 0, 0), size);
 
   	randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
-    
+    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
 
 }
 
