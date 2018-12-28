@@ -45,10 +45,11 @@ function init() {
   	let size = 10; // halfsize of agent
   	let randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
 //    agentJ = new AgentJ(new THREE.Vector3(randXZ[0], 0, randXZ[1]), size);
+    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
     agentJ = new AgentJ(new THREE.Vector3(500, 0, 0), size);
 
   	randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
-    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
+    
 
 }
 
