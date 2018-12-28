@@ -1,6 +1,6 @@
 import {sceneFromJSON} from './scene.js';
 import {scene,initThree, postMessage} from './threemain.js';
-import {Agent as AgentJ} from './agent.js';
+import {Agent as AgentJ} from './AgentJ.js';
 import {Agent as AgentK} from 'https://j91157j91157.github.io/GDHW/js/HW6/agent.js';
 
 /////////////////////////////////////////////////////////
