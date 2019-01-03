@@ -28,7 +28,7 @@ class Agent {
     this.force = new THREE.Vector3();
     this.target = null;
     this.halfSize = halfSize;  // half width
-    this.mesh = agentMesh (this.halfSize, 'red');
+    this.mesh = agentMesh (this.halfSize, 'cyan');
     this.MAXSPEED = 800;  //800
     this.ARRIVAL_R = 74;   //74
     
