@@ -131,24 +131,5 @@ class Agent {
     // seek
     this.force.copy(this.targetInducedForce(this.target.pos));
   }
-    findob(obs){
-    //let allObstacles = scene.obstacles;
-    let minD = 1e10;
-    let d;
-    let i;
-    let g;
-    for (i = 0; i < obs.length; i++) {
-      d = this.pos.clone().sub(obs[i].center).length()
-      //console.log(d)
-      if (d < minD) {
-        minD = d;
-        g = i
-      }
-    }
-    //console.log(obs[g])
-    return obs[g]
-  }
-
-}
 
 export{Agent};
