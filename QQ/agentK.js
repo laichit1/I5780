@@ -68,14 +68,14 @@ class Agent {
   let min = 1e10;
   let ID = -1, minPrep;
     const REACH = 80;
-    const K = 20;
+    const K = 25;
   for(let i = 0; i < obs.length; i++){
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
     if (proj > 0 && proj < REACH) {
       let perp = new THREE.Vector3();
       perp.subVectors (point, vhat.clone().setLength(proj));
-      let overlap = obs[i].size + this.halfSize - perp.length()
+      let overlap = obs[i].size + this.halfSize - perp.length() +50
           if (overlap > 0 && proj < min) {
       min = proj;
       perp.setLength (K*overlap);
