@@ -98,7 +98,7 @@ class Agent {
     let dst = diff.length();
     if (dst < this.ARRIVAL_R) {
       this.vel.setLength(dst)
-      const REACH_TARGET = 35;
+      const REACH_TARGET = 36;
       if (dst < REACH_TARGET) {// target reached
         console.log ('target reached');
          this.target.setFound (this);
