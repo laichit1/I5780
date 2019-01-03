@@ -66,7 +66,7 @@ class Agent {
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
       const REACH = 80  //80
-      const K = 20      //20
+      const K = 21      //20
 
       if (proj >= 0 && proj <= REACH && proj < this.minProj) {
         let perp = new THREE.Vector3();
@@ -98,7 +98,7 @@ class Agent {
     let dst = diff.length();
     if (dst < this.ARRIVAL_R) {
       this.vel.setLength(dst)
-      const REACH_TARGET = 36;
+      const REACH_TARGET = 35;
       if (dst < REACH_TARGET) {// target reached
         console.log ('target reached');
          this.target.setFound (this);
