@@ -71,7 +71,7 @@ class Agent {
       if (proj >= 0 && proj <= REACH && proj < this.minProj) {
         let perp = new THREE.Vector3();
         perp.subVectors (point, vhat.clone().setLength(proj));
-        let overlap = obs[i].size + this.halfSize - perp.length()    //+50
+        let overlap = obs[i].size + this.halfSize - perp.length()+50    //+50
         if (overlap > 0 ) {
           perp.setLength (K*overlap);
           perp.negate()
