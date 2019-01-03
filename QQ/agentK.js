@@ -30,7 +30,7 @@ class Agent {
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'cyan');
     this.MAXSPEED = 800;
-    this.ARRIVAL_R = 50;
+    this.ARRIVAL_R = 65;
     
     this.score = 0;
     
@@ -38,10 +38,6 @@ class Agent {
     this.angle = 0;
     scene.add (this.mesh);
 
-    //
-    this.minProj = 999999;
-    this.finalPerp = new THREE.Vector3();
-    this.finalOverlap;
   }
   
   update(dt) {
