@@ -119,6 +119,10 @@ class Agent {
     return targetPos.clone().sub(this.pos).normalize().multiplyScalar(this.MAXSPEED).sub(this.vel)
   }
 
+    setEnemy(otherAgent){
+    this.enemt = otherAgent;
+  }
+
   accumulateForce() {
     // seek
     this.force.copy(this.targetInducedForce(this.target.pos));
