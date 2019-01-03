@@ -30,7 +30,7 @@ class Agent {
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'cyan');
     this.MAXSPEED = 800;
-    this.ARRIVAL_R = 73;
+    this.ARRIVAL_R = 74;
     
     this.score = 0;
     
@@ -71,7 +71,7 @@ class Agent {
     if (proj > 0 && proj < REACH) {
       let perp = new THREE.Vector3();
       perp.subVectors (point, vhat.clone().setLength(proj));
-      let overlap = obs[i].size + this.halfSize - perp.length() +40
+      let overlap = obs[i].size + this.halfSize - perp.length() +30
           if (overlap > 0 && proj < min) {
       min = proj;
       perp.setLength (K*overlap);
