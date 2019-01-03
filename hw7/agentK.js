@@ -1,3 +1,8 @@
+
+import {scene} from './threemain.js';
+import {Obstacle} from './obstacle.js';
+import {Target} from './target.js';
+
 function agentMesh (size, colorName='red') {
   // mesh facing +x
   let geometry = new THREE.Geometry();
