@@ -65,8 +65,8 @@ class Agent {
       let vhat = this.vel.clone().normalize();
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
-      const REACH = 80  //60
-      const K = 20
+      const REACH = 50  //80
+      const K = 10      //20
 
       if (proj >= 0 && proj <= REACH && proj < this.minProj) {
         let perp = new THREE.Vector3();
