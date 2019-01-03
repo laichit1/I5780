@@ -68,7 +68,7 @@ class Agent {
   let min = 1e10;
   let ID = -1, minPrep;
     const REACH = 80;
-    const K = 25;
+    const K = 22;
   for(let i = 0; i < obs.length; i++){
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
