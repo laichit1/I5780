@@ -65,7 +65,7 @@ class Agent {
       let vhat = this.vel.clone().normalize();
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
-      const REACH = 80  //60
+      const REACH = 110  //60
       const K = 20
 
       if (proj >= 0 && proj <= REACH && proj < this.minProj) {
