@@ -41,17 +41,15 @@ function init() {
   // in scene.js
   sceneFromJSON ( );  // using LevelDesigner
   
-  //////////////////////////////////////////////////////////////////////////  
-    let size = 10; // halfsize of agent
-    let randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
-    agentJ = new AgentJ(new THREE.Vector3(randXZ[0], 0, randXZ[1]), size);
-//    agentJ = new AgentJ(new THREE.Vector3(500, 0, 0), size);
+  //////////////////////////////////////////////////////////////////////////	
+  	let size = 10; // halfsize of agent
+  	let randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
+//    agentJ = new AgentJ(new THREE.Vector3(randXZ[0], 0, randXZ[1]), size);
+    agentJ = new AgentJ(new THREE.Vector3(500, 0, 0), size);
 
-    randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
-    agentK = new AgentK(new THREE.Vector3(randXZ[0], 0, randXZ[1]), size);
-//    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
-	agentJ.setEnemy(agentK);
-	agentK.setEnemy(agentJ);
+  	randXZ = [-400 + Math.random()*800, -400 + Math.random()*800];
+    agentK = new AgentK(new THREE.Vector3(200,0,-200), size);
+
 }
 
 
@@ -67,9 +65,9 @@ function animate() {
   scene.obstacles.forEach ( function (obs) { obs.checkCollision (agentK)} );
 
   if (scene.targets.length > 0)
-    requestAnimationFrame(animate);
+  	requestAnimationFrame(animate);
   else
-    alert ('game over')
+  	alert ('game over')
 
   render();
 }
@@ -77,3 +75,5 @@ function animate() {
 function render() {
   renderer.render(scene, camera);
 }
+
+

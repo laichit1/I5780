@@ -1,5 +1,6 @@
 /*
 function sceneDesign() {
+
   // add obstacles to the scene
   scene.obstacles = [];
   scene.obstacles.push ( new Obstacle (new THREE.Vector3(150,0,150), 50) )
@@ -11,6 +12,7 @@ function sceneDesign() {
   scene.targets.push (new Target (2, new THREE.Vector3 (-200,0,150) ));
   scene.targets.push (new Target (3, new THREE.Vector3 (250,0,-200) ));
   scene.targets.push (new Target (4, new THREE.Vector3 (0,0,-200) ));
+
 }
 */
 
@@ -25,12 +27,14 @@ function sceneFromJSON () {
   
   scene.obstacles = []
   myScene.obstacles.forEach (function (obs) {
-    scene.obstacles.push (new Obstacle (new THREE.Vector3 (obs.center.x, obs.center.y, obs.center.z), 30))
+  	scene.obstacles.push (new Obstacle (new THREE.Vector3 (obs.center.x, obs.center.y, obs.center.z), 30))
   })
   
   scene.targets = []
   myScene.targets.forEach (function (tt) {
-    scene.targets.push (new Target (tt.id, new THREE.Vector3 (tt.pos.x, tt.pos.y, tt.pos.z) ))
+  	scene.targets.push (new Target (tt.id, new THREE.Vector3 (tt.pos.x, tt.pos.y, tt.pos.z) ))
   })
 
 }
+
+export {sceneFromJSON};
