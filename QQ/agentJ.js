@@ -29,8 +29,8 @@ class Agent {
     this.target = null;
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'red');
-    this.MAXSPEED = 50;  //800
-    this.ARRIVAL_R = 30;   //74
+    this.MAXSPEED = 800;  //800
+    this.ARRIVAL_R = 74;   //74
     
     this.score = 0;
     
@@ -65,8 +65,8 @@ class Agent {
       let vhat = this.vel.clone().normalize();
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
-      const REACH = 50  //80
-      const K = 10      //20
+      const REACH = 80  //80
+      const K = 20      //20
 
       if (proj >= 0 && proj <= REACH && proj < this.minProj) {
         let perp = new THREE.Vector3();

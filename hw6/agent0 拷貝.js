@@ -1,7 +1,3 @@
-import {scene} from './threemain.js';
-import {Obstacle} from './obstacle.js';
-import {Target} from './target.js';
-
 function agentMesh (size, colorName='red') {
   // mesh facing +x
   let geometry = new THREE.Geometry();
@@ -22,7 +18,7 @@ function agentMesh (size, colorName='red') {
 
 class Agent {
   constructor(pos, halfSize) {
-    this.name = "K";
+    this.name = "Laichit";
     this.pos = pos.clone();
     this.vel = new THREE.Vector3();
     this.force = new THREE.Vector3();
@@ -30,18 +26,13 @@ class Agent {
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'cyan');
     this.MAXSPEED = 800;
-    this.ARRIVAL_R = 74;
+    this.ARRIVAL_R = 73; //32
     
     this.score = 0;
     
     // for orientable agent
     this.angle = 0;
     scene.add (this.mesh);
-
-    //
-    this.minProj = 999999;
-    this.finalPerp = new THREE.Vector3();
-    this.finalOverlap;
   }
   
   update(dt) {
@@ -64,32 +55,33 @@ class Agent {
     // (write your code here)
 
     //overlap > 0 && proj is minimal
+    for(var i = 0; i < obs.length; i++) {
       let vhat = this.vel.clone().normalize();
-  let min = 1e10;
-  let ID = -1, minPrep;
-    const REACH = 80;
-    const K = 20;
-  for(let i = 0; i < obs.length; i++){
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
-    if (proj > 0 && proj < REACH) {
-      let perp = new THREE.Vector3();
-      perp.subVectors (point, vhat.clone().setLength(proj));
-      let overlap = obs[i].size + this.halfSize - perp.length()
-          if (overlap > 0 && proj < min) {
-      min = proj;
-      perp.setLength (K*overlap);
-      perp.negate()
-      ID = i;
-      minPrep = perp.clone();
-            //this.force.add (perp);
-      console.log ("hit:", perp);
-      }
-      }
-  }
-  if(ID > -1) this.force.add(minPrep);
+      const REACH = 80  //60
+      const K = 20
 
+      if (proj >= 0 && proj <= REACH && proj < this.minProj) {
+        let perp = new THREE.Vector3();
+        perp.subVectors (point, vhat.clone().setLength(proj));
+        let overlap = obs[i].size + this.halfSize - perp.length()+50
+        if (overlap > 0 ) {
+          perp.setLength (K*overlap);
+          perp.negate()
+          this.minProj = proj;
+          this.finalPerp = perp;
+          this.finalOverlap = overlap;
+        }
+      }
+    }
 
+    if(this.finalOverlap > 0) {
+      this.force.add (this.finalPerp);
+      console.log ("hit:", this.force);
+    }
+    this.minProj = 1000;
+    this.finalOverlap = 0;
   // Euler's method       
     this.vel.add(this.force.clone().multiplyScalar(dt));
 
@@ -146,5 +138,3 @@ class Agent {
   }
 
 }
-
-export{Agent};
