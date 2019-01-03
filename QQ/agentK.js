@@ -29,8 +29,8 @@ class Agent {
     this.target = null;
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'cyan');
-    this.MAXSPEED = 600;
-    this.ARRIVAL_R = 45;
+    this.MAXSPEED = 50;
+    this.ARRIVAL_R = 30;
     
     this.score = 0;
     
@@ -64,33 +64,31 @@ class Agent {
     // (write your code here)
 
     //overlap > 0 && proj is minimal
-    for(var i = 0; i < obs.length; i++) {
       let vhat = this.vel.clone().normalize();
+  let min = 1e10;
+  let ID = -1, minPrep;
+    const REACH = 50;
+    const K = 10;
+  for(let i = 0; i < obs.length; i++){
       let point = obs[i].center.clone().sub (this.pos) // c-p
       let proj  = point.dot(vhat);
-      const REACH = 100
-      const K = 90
-
-      if (proj >= 0 && proj <= REACH && proj < this.minProj) {
-        let perp = new THREE.Vector3();
-        perp.subVectors (point, vhat.clone().setLength(proj));
-        let overlap = obs[i].size + this.halfSize - perp.length()
-        if (overlap > 0 ) {
-          perp.setLength (K*overlap);
-          perp.negate()
-          this.minProj = proj;
-          this.finalPerp = perp;
-          this.finalOverlap = overlap;
-        }
+    if (proj > 0 && proj < REACH) {
+      let perp = new THREE.Vector3();
+      perp.subVectors (point, vhat.clone().setLength(proj));
+      let overlap = obs[i].size + this.halfSize - perp.length()
+          if (overlap > 0 && proj < min) {
+      min = proj;
+      perp.setLength (K*overlap);
+      perp.negate()
+      ID = i;
+      minPrep = perp.clone();
+            //this.force.add (perp);
+      console.log ("hit:", perp);
       }
-    }
+      }
+  }
+  if(ID > -1) this.force.add(minPrep);
 
-    if(this.finalOverlap > 0) {
-      this.force.add (this.finalPerp);
-      console.log ("hit:", this.force);
-    }
-    this.minProj = 999999;
-    this.finalOverlap = 0;
 
   // Euler's method       
     this.vel.add(this.force.clone().multiplyScalar(dt));
