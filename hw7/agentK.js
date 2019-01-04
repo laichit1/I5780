@@ -1,4 +1,3 @@
-
 import {scene} from './threemain.js';
 import {Obstacle} from './obstacle.js';
 import {Target} from './target.js';
@@ -29,15 +28,16 @@ class Agent {
     this.force = new THREE.Vector3();
     this.target = null;
     this.halfSize = halfSize;  // half width
-    this.mesh = agentMesh (this.halfSize, 'cyan');
-    this.MAXSPEED = 715;
-    this.ARRIVAL_R = 55; //32
+    this.mesh = agentMesh (this.halfSize, 'Lavender');
+    this.MAXSPEED = 500000;
+    this.ARRIVAL_R = 74;
     
     this.score = 0;
     
     // for orientable agent
     this.angle = 0;
     scene.add (this.mesh);
+
   }
   
   update(dt) {
@@ -54,26 +54,38 @@ class Agent {
     // collision
     // for all obstacles in the scene
     let obs = scene.obstacles;
-    let ob1 = this.findob(obs)
-    //console.log(obs[0].center);
+
     // pick the most threatening one
     // apply the repulsive force
-    let vhat = this.vel.clone().normalize();
-    let point = ob1.center.clone().sub (this.pos) // c-p
-    let proj  = point.dot(vhat);
-    const REACH = 150
-    const K = 20
+    // (write your code here)
+
+    //overlap > 0 && proj is minimal
+      let vhat = this.vel.clone().normalize();
+  let min = 1e10;
+  let ID = -1, minPrep;
+    const REACH = 80;
+    const K = 21;
+  for(let i = 0; i < obs.length; i++){
+      let point = obs[i].center.clone().sub (this.pos) // c-p
+      let proj  = point.dot(vhat);
     if (proj > 0 && proj < REACH) {
       let perp = new THREE.Vector3();
       perp.subVectors (point, vhat.clone().setLength(proj));
-      let overlap = ob1.size + this.halfSize - perp.length()
-      if (overlap > 0) {
-        perp.setLength (K*overlap);
-        perp.negate()
-        this.force.add (perp);
-        console.log ("hit:", perp);
+      let overlap = obs[i].size + this.halfSize - perp.length() +35
+          if (overlap > 0 && proj < min) {
+      min = proj;
+      perp.setLength (K*overlap);
+      perp.negate()
+      ID = i;
+      minPrep = perp.clone();
+            //this.force.add (perp);
+      console.log ("hit:", perp);
+      }
       }
   }
+  if(ID > -1) this.force.add(minPrep);
+
+
   // Euler's method       
     this.vel.add(this.force.clone().multiplyScalar(dt));
 
@@ -124,30 +136,9 @@ class Agent {
     return targetPos.clone().sub(this.pos).normalize().multiplyScalar(this.MAXSPEED).sub(this.vel)
   }
 
-    setEnemy(otherAgent){
-    this.enemt = otherAgent;
-  }
-
   accumulateForce() {
     // seek
     this.force.copy(this.targetInducedForce(this.target.pos));
-  }
-    findob(obs){
-    //let allObstacles = scene.obstacles;
-    let minD = 1e10;
-    let d;
-    let i;
-    let g;
-    for (i = 0; i < obs.length; i++) {
-      d = this.pos.clone().sub(obs[i].center).length()
-      //console.log(d)
-      if (d < minD) {
-        minD = d;
-        g = i
-      }
-    }
-    //console.log(obs[g])
-    return obs[g]
   }
 
 }

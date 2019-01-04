@@ -1,4 +1,3 @@
-
 import {scene} from './threemain.js';
 import {Obstacle} from './obstacle.js';
 import {Target} from './target.js';
@@ -23,21 +22,23 @@ function agentMesh (size, colorName='red') {
 
 class Agent {
   constructor(pos, halfSize) {
-    this.name = "Laichit";
+    this.name = "QQ";
     this.pos = pos.clone();
     this.vel = new THREE.Vector3();
     this.force = new THREE.Vector3();
     this.target = null;
     this.halfSize = halfSize;  // half width
     this.mesh = agentMesh (this.halfSize, 'cyan');
-    this.MAXSPEED = 715;
-    this.ARRIVAL_R = 55; //32
+    this.MAXSPEED = 800;  //800
+    this.ARRIVAL_R = 74;   //74
     
     this.score = 0;
     
     // for orientable agent
     this.angle = 0;
     scene.add (this.mesh);
+
+    //
   }
   
   update(dt) {
@@ -54,26 +55,40 @@ class Agent {
     // collision
     // for all obstacles in the scene
     let obs = scene.obstacles;
-    let ob1 = this.findob(obs)
-    //console.log(obs[0].center);
+
     // pick the most threatening one
     // apply the repulsive force
-    let vhat = this.vel.clone().normalize();
-    let point = ob1.center.clone().sub (this.pos) // c-p
-    let proj  = point.dot(vhat);
-    const REACH = 150
-    const K = 20
-    if (proj > 0 && proj < REACH) {
-      let perp = new THREE.Vector3();
-      perp.subVectors (point, vhat.clone().setLength(proj));
-      let overlap = ob1.size + this.halfSize - perp.length()
-      if (overlap > 0) {
-        perp.setLength (K*overlap);
-        perp.negate()
-        this.force.add (perp);
-        console.log ("hit:", perp);
+    // (write your code here)
+
+    //overlap > 0 && proj is minimal
+    for(var i = 0; i < obs.length; i++) {
+      let vhat = this.vel.clone().normalize();
+      let point = obs[i].center.clone().sub (this.pos) // c-p
+      let proj  = point.dot(vhat);
+      const REACH = 80  //80
+      const K = 21      //20
+
+      if (proj >= 0 && proj <= REACH && proj < this.minProj) {
+        let perp = new THREE.Vector3();
+        perp.subVectors (point, vhat.clone().setLength(proj));
+        let overlap = obs[i].size + this.halfSize - perp.length()+35    //+50
+        if (overlap > 0 ) {
+          perp.setLength (K*overlap);
+          perp.negate()
+          this.minProj = proj;
+          this.finalPerp = perp;
+          this.finalOverlap = overlap;
+        }
       }
-  }
+    }
+
+    if(this.finalOverlap > 0) {
+      this.force.add (this.finalPerp);
+      console.log ("hit:", this.force);
+    }
+    this.minProj = 1000;
+    this.finalOverlap = 0;
+
   // Euler's method       
     this.vel.add(this.force.clone().multiplyScalar(dt));
 
@@ -123,13 +138,12 @@ class Agent {
   targetInducedForce(targetPos) {
     return targetPos.clone().sub(this.pos).normalize().multiplyScalar(this.MAXSPEED).sub(this.vel)
   }
-  setEnemy(otherAgent){
-    this.enemt = otherAgent;
-  }
 
   accumulateForce() {
     // seek
     this.force.copy(this.targetInducedForce(this.target.pos));
   }
+
+}
 
 export{Agent};
