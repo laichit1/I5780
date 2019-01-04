@@ -63,7 +63,7 @@ class Agent {
       let vhat = this.vel.clone().normalize();
   let min = 1e10;
   let ID = -1, minPrep;
-    const REACH = 80;
+    const REACH = 30;
     const K = 21;
   for(let i = 0; i < obs.length; i++){
       let point = obs[i].center.clone().sub (this.pos) // c-p
